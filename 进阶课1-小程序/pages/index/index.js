@@ -93,9 +93,12 @@ Page({
     console.log(this.data.isPause);
   },
 
-  tapShare(){
-    const {toName,mainText }=this.data.cardInfo;
-    if(toName && mainText){
+  tapShare() {
+    const {
+      toName,
+      mainText
+    } = this.data.cardInfo;
+    if (toName && mainText) {
       onShareAppMessage
     }
   },
