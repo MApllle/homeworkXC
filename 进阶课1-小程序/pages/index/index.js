@@ -1,16 +1,13 @@
 // index.js
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0';
 
-const backgroundMusic = wx.createInnerAudioContext({
-  useWebAudioImplement: true
-});
+const backgroundMusic = wx.createInnerAudioContext();
 backgroundMusic.src = "https://music.163.com/song/media/outer/url?id=2044958868.mp3";
 wx.setInnerAudioOption({
   obeyMuteSwitch: false
 });
 backgroundMusic.loop = true;
 backgroundMusic.autoplay = true;
-
 Page({
   data: {
     cardInfo: {
@@ -45,6 +42,8 @@ Page({
       buttonMessage: isshare ? '制作我的贺卡' : '分享给朋友',
       isShare: isshare ? true : false,
     })
+
+
   },
   maintextInput(e) {
     //待做：限制字数500字
