@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view class="maincontainer">
+  <image src="../../static/water.jpg" mode="aspectFill" class="bg-img"></image>
+  <view class="card-container">
+    <image src="{{musicButton}}" mode="aspectFit" class="music-button" bind:tap="tapMusic"></image>
+    <view class="userinfo">
+      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <view class="nickname-wrapper">
+        <text class="nickname-label">你收到了来自{{userInfo.nickName}}的贺卡</text>
+      </view>
+    </view>
+    <view class="maintext">
+      <view class="to-wrapper">
+        <input placeholder="to:" bindinput="toNameInput" value="{{cardInfo.toName}}" disabled="{{isShare}}" />
+      </view>
+      <textarea placeholder="在这里输入想对ta说的话" bindinput="maintextInput" value="{{cardInfo.mainText}}" disabled="{{isShare}}" />
+    </view>
+    <view class="operation">
+      <button wx:if="{{isShare}}" class="submit-button" type="primary" bind:tap="tapMake">制作我的贺卡</button>
+      <button wx:else class="submit-button" type="primary" open-type="share">分享给朋友</button>
+    </view>
+  </view>
+</view>

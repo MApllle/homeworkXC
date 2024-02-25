@@ -1,0 +1,20 @@
+<!--pages/login/login.wxml-->
+<view class="maincontainer">
+  <image src="../../static/water.jpg" mode="aspectFill" class="bg-img"></image>
+  <view class="userinfo">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    </button>
+    <view class="nickname-wrapper">
+      <text class="nickname-label">昵称</text>
+      <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
+    </view>
+  </view>
+  <view class="button-box">
+    <!-- <button type="primary">选择贺卡背景图</button> -->
+    <button type="primary" hover-class="button-hover" bind:tap="naviToCard">开始制作我的贺卡</button>
+  </view>
+  <view class="info-box">
+    <text user-select="false">上传头像、输入昵称，将你的祝福送给朋友</text>
+  </view>
+</view>
