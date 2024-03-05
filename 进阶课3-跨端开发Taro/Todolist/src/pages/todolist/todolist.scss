@@ -1,0 +1,121 @@
+@import '~taro-ui/dist/style/index.scss';
+
+.todo-container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+    margin-top: 0;
+    background-color: #E3F2FD;
+
+}
+
+
+.todo-input{
+    border: 2px solid gray;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 10px;
+}
+
+.todo-item{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    align-items: center;
+    border: 2px solid gray;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 10px;
+
+}
+
+.checked-item{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    align-items: center;
+    border: 2px solid gray;
+    background-color: rgba($color: #6699CC, $alpha: 0.3);
+    border-radius: 10px;
+    margin: 15px;
+    padding: 10px;
+    
+}
+
+.checked-title{
+    margin-left: 20px;
+    font-size: large;
+    font-weight: bold;
+    color: gray;
+}
+
+.todo-title{
+    font-size: larger;
+    margin-left: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+.left-item{
+    flex: 1;
+}
+
+.right-item{
+    margin-right: 10px;
+}
+
+.btn-del{
+    color: black;
+    
+}
+.todo-bin{
+    flex:2;
+    margin-right: 15px;
+}
+
+
+.todo-submit{
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    width: 100%;
+    height: 15vh;
+    flex: 1;
+}
+
+.todo-input{
+    flex:8;
+}
+
+.todo-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.options{
+    margin-top: 5rpx;
+    display: flex;
+    justify-content:flex-start;
+    width: 100%;
+}
+
+.sort-btn{
+    width: 250rpx;
+    margin-right: 5rpx;
+    margin-left: 10rpx;
+}
+
+.cancel-btn{
+    margin-left: 5rpx;
+    width:150rpx;
+}
+
+.share-btn{
+    width:250rpx;
+    margin-right: 5rpx;
+}
