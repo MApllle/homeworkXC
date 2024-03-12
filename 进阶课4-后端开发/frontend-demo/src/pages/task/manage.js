@@ -12,49 +12,24 @@ const layout = {
     span: 16,
   },
 };
-const data = [
-  {
-    _id: "1",
-    tname: "333",
-    tdetail: "3333",
-    tdone: false,
-    uname: "hahaha",
-  },
-  {
-    _id: "2",
-    tname: "222",
-    tdetail: "2222",
-    tdone: true,
-    uname: "hahaha",
-  },
-  {
-    _id: "3",
-    tname: "444",
-    tdetail: "4444",
-    tdone: false,
-    uname: "hahaha",
-  },
-];
 export default function Manage() {
   const [form] = Form.useForm();
   const [openModel, setOpenModel] = useState(false);
   const [openType, setopenType] = useState("add");
-  const [taskList, setTaskList] = useState(data);
-  const [loading, setLoading] = useState(false);
+  const [taskList, setTaskList] = useState([]);
+  const username = util.getStorage("userInfo").username;
 
   const getTask = () => {
-    setLoading(true);
     axios
       .get("http://127.0.0.1:3000/task", {
         params: {
-          uname: "hahaha",
+          uname: username,
         },
       })
       .then((res) => {
         console.log(res);
         setTaskList(res.data.data.result);
         console.log("result", res.data.data.result);
-        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -72,10 +47,9 @@ export default function Manage() {
   //提交表单
   const onSubmit = () => {
     const data = form.getFieldsValue();
-    const { username: uname } = util.getStorage("userInfo");
-    const newData = { ...data, uname };
-    
-    console.log("onSubmit",openType,"data is",newData);
+    const newData = { ...data, uname: username };
+
+    console.log("onSubmit", openType, "data is", newData);
     if (openType === "edit") {
       axios
         .put("http://127.0.0.1:3000/task", newData, {
@@ -91,7 +65,7 @@ export default function Manage() {
           console.log(error);
         });
     } else if (openType === "add") {
-        console.log("detail");
+      console.log("detail");
       axios
         .post("http://127.0.0.1:3000/task", newData, {
           headers: {
@@ -153,16 +127,20 @@ export default function Manage() {
     form.setFieldsValue(record);
   };
   //新增任务
-    const onAdd = () => {
-        setopenType("add");
-        setOpenModel(true);
-    };
+  const onAdd = () => {
+    setopenType("add");
+    setOpenModel(true);
+  };
 
   return (
-    <>
-      <Button type="primary" onClick={() => onAdd()}>
-        新增任务
-      </Button>
+    <div style={styles.container}>
+      <h1 style={styles.title}>任务管理</h1>
+      <div style={styles.right}>
+        <Button style={styles.add_btn} type="primary" onClick={() => onAdd()}>
+          新增任务
+        </Button>
+      </div>
+
       <Modal
         title={
           openType === "add"
@@ -175,7 +153,7 @@ export default function Manage() {
         }
         centered
         open={openModel}
-        onOk={()=>onSubmit()}
+        onOk={() => onSubmit()}
         onCancel={() => setOpenModel(false)}
         width={1000}
       >
@@ -184,7 +162,7 @@ export default function Manage() {
           name="inputTask"
           onFinish={onFinish}
           form={form}
-          disabled={!openType === "detail"}
+          disabled={openType === "detail"}
           style={{
             maxWidth: 600,
           }}
@@ -201,16 +179,27 @@ export default function Manage() {
               <Select.Option value={false}>未完成</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name="_id" label="_id" style={{display:"none"}}>
+          <Form.Item name="_id" label="_id" style={{ display: "none" }}>
             <span></span>
           </Form.Item>
         </Form>
       </Modal>
       <div style={styles.table_container}>
         <Table dataSource={taskList} rowKey="_id" size="middle">
-          <Column ellipsis={true} title="任务名" dataIndex="tname" key="tname" />
-          <Column ellipsis={true} title="任务摘要" dataIndex="tdetail" key="tdetail" />
-          <Column ellipsis={true}
+          <Column
+            ellipsis={true}
+            title="任务名"
+            dataIndex="tname"
+            key="tname"
+          />
+          <Column
+            ellipsis={true}
+            title="任务摘要"
+            dataIndex="tdetail"
+            key="tdetail"
+          />
+          <Column
+            ellipsis={true}
             title="任务状态"
             width={150}
             dataIndex="tdone"
@@ -239,15 +228,33 @@ export default function Manage() {
           />
         </Table>
       </div>
-    </>
+    </div>
   );
 }
 
 const styles = {
-    table_container: {
-        width:"90vw",
-        margin:"auto",
-        flex: 1,
-        alginItems: "center",
-    },
-    };
+  container: {
+    width: "98vw",
+    height: "88vh",
+    margin: "auto",
+    border: "1px solid #ccc",
+    flex: 1,
+    alginItems: "center",
+  },
+  add_btn: {
+    marginRight: "10vw",
+    marginBottom: "10px",
+  },
+  table_container: {
+    width: "90vw",
+    margin: "auto",
+    flex: 1,
+    alginItems: "center",
+  },
+  title: {
+    marginLeft: "3vw",
+  },
+  right: {
+    textAlign: "right",
+  },
+};

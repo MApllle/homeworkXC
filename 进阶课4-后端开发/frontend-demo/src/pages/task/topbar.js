@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 // 顶部导航栏:退出登录
 export default function Topbar() {
   const navigate = useNavigate();
-
+  const username = util.getStorage("userInfo").username;
   const logout = () => {
     axios
       .get("http://127.0.0.1:3000/logout")
       .then((res) => {
         console.log(res);
-        util.clearStorage("userInfo");
+        util.removeStorage("userInfo");
         navigate("/");
       })
       .catch(function (error) {
@@ -21,11 +21,18 @@ export default function Topbar() {
       });
   };
   return (
-    <div>
-      <span>用户名</span>
+    <div style={styles.container}>
+      <span>您好，{username}，现在开始管理你的任务吧！</span>
       <Button type="primary" onClick={logout}>
         退出登录
       </Button>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    margin: "10px",
+    textAlign: "right",
+  },
+};

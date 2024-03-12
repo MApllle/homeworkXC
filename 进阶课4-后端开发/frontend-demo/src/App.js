@@ -1,5 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import LoginForm from "./pages/login/index";
 import Task from "./pages/task/index";
 

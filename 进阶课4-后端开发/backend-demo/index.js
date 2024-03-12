@@ -3,15 +3,14 @@ const session = require("express-session");
 const { encrypt, decrypt } = require("./components/crypto");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
+const { MongoClient, ObjectId } = require("mongodb");
 
 const cors = require("cors");
-
 
 const app = express();
 const port = 3000;
 
 const router = express.Router();
-const { MongoClient, ObjectId } = require("mongodb");
 
 app.use(bodyParser.json());
 app.use(cors()); //使用cors中间件
@@ -49,18 +48,6 @@ const removeEmpty = (obj) => {
   return obj;
 };
 
-//校验登录状态
-// const passUrl = ["/login", "/register", "/404", "/loginout"];
-// app.use(async (req,res,next) => {
-//   if (!~passUrl.findIndex((item) => req.url === item)) {
-//     if (!req.session.username) {
-//       res.json({ success: false, message: "未登录" });
-//       return;
-//     }
-//   }
-//   console.log("req",req.session.username);
-//   await next();
-// });
 
 app
   .route("/task")
@@ -84,8 +71,8 @@ app
     const { Collection: taskCollection, client } = await connectDB("task");
     //userCollection.createIndex({ username: 1 }, { unique: true });
     const { uname, tname, tdetail, tdone } = req.body;
-    if(!uname){
-      res.json({ success: false, message: "uname is required!" });
+    if (!uname) {
+      res.json({ success: false, message: "需要字段uname!" });
       return;
     }
     try {
@@ -109,7 +96,7 @@ app
     console.log(req.query);
     const { _id } = req.query;
     if (!_id) {
-      res.status(500).json({message: "id is required!" });
+      res.status(500).json({ message: "需要字段_id!" });
       return;
     }
     const id = new ObjectId(_id);
@@ -128,7 +115,7 @@ app
     const { Collection: taskCollection, client } = await connectDB("task");
     const { uname, _id, tname, tdetail, tdone } = req.body;
     if (!_id) {
-      res.status(500).json({ message: "id is required!" });
+      res.status(500).json({ message: "需要字段_id!" });
       return;
     }
     //const id = ObjectId(_id);
@@ -248,140 +235,19 @@ app.post("/login", async (req, res) => {
 });
 
 //登出；前端redirect到登录页
-app.get('/logout',(req,res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy();
   res.json({ success: true, message: "登出成功" });
 });
 
-//查询task
-// app.get("/task", async (req, res) => {
-//   const { taskCollection, client } = await connectDB("task");
-//   const { uid, tname, tdetail, tdone } = req.query;
-//   const query = removeEmpty({ uid, tname, tdetail, tdone });
-//   try {
-//     const result = await taskCollection.find(query).toArray();
-//     res.json({ success: true, data: { result } });
-//     client.close();
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ success: false, message: e.message });
-//     return;
-//   }
-// });
-
-// //删除task
-// app.delete("/task", async (req, res) => {
-//   const { taskCollection, client } = await connectDB("task");
-//   const { uid, _id } = req.query;
-//   const query = removeEmpty({ uid, _id });
-//   try {
-//     const result = await taskCollection.deleteOne(query);
-//     res.json({ success: true, data: { result } });
-//     client.close();
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ success: false, message: e.message });
-//     return;
-//   }
-// });
-
-// //新增task
-// app.post("/task", async (req, res) => {
-//   const { taskCollection, client } = await connectDB("task");
-//   //userCollection.createIndex({ username: 1 }, { unique: true });
-//   const { uid, tname, tdetail, tdone } = req.body;
-//   try {
-//     const result = await taskCollection.insertOne({
-//       uid,
-//       tname,
-//       tdetail,
-//       tdone,
-//     });
-//     res.json({ success: true, data: { result } });
-//     client.close();
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ success: false, message: e.message });
-//     return;
-//   }
-// });
-
-// //修改task
-// app.put("/task", async (req, res) => {
-//   const { taskCollection, client } = await connectDB("task");
-//   const { uid, _id, tname, tdetail, tdone } = req.body;
-//   if (!_id) {
-//     res.json({ success: false, message: "id is required!" });
-//     return;
-//   }
-//   const query = removeEmpty({ _id });
-//   const update = removeEmpty({ uid, tname, tdetail, tdone });
-//   try {
-//     const result = await taskCollection.updateOne(query, { $set: update });
-//     res.json({ success: true, data: { result } });
-//     client.close();
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ success: false, message: e.message });
-//     return;
-//   }
-// });
-
-// const calMD5 = (data) => {
-//   return crypto.createHash("md5").update(data).digest("hex");
-// };
-
-// const saveImage = (data, filaName) => {
-//   const outputDir = path.resolve(__dirname, "./output");
-//   if (!fs.existsSync(outputDir)) {
-//     fs.mkdirSync(outputDir);
-//   }
-//   const filePath = path.resolve(outputDir, filaName);
-//   if (fs.existsSync(filePath)) {
-//     console.log(`File ${filaName} already exists`);
-//     return;
-//   }
-//   fs.writeFileSync(filePath, data);
-// };
-
-// const createErrorResponse = (message) => {
-//   return { success: false, message };
-// };
-
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
-
-// app.post("/uploadimage", async (req, res) => {
-//   res.setHeader("Content-Type", "application/json");
-//   const { url } = req.body;
-//   if (!url) {
-//     res.status(400).json(createErrorResponse("URL is required!"));
-//     return;
-//   }
-//   try {
-//     const parseUrl = new URL(url);
-//   } catch (e) {
-//     res.status(400).json(createErrorResponse("Invalid URL"));
-//     return;
-//   }
-//   try {
-//     const image = await axios.get(url, { responseType: "arraybuffer" });
-//     const ext = url.split("?")[0].split(".").pop(); //$或者?都需要判断
-//     const md5 = calMD5(image.data);
-//     const fileName = `${md5}.${ext}`;
-//     console.log(fileName);
-//     saveImage(image.data, fileName);
-
-//     res.json({ success: true, data: { md5, fileName } });
-//   } catch (e) {
-//     console.log(e);
-//     res
-//       .status(500)
-//       .json(createErrorResponse(`Error fetching image from ${url}`));
-//     return;
-//   }
-// });
+app.get("/", (req, res) => {
+  if (req.session.userName) {
+    //判断session 状态，如果有效，则返回主页，否则转到登录页面
+    res.json({ success: true, message: "会话有效，跳过登录" });
+  } else {
+    res.status(500).json({ message: "会话无效，请登录" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
