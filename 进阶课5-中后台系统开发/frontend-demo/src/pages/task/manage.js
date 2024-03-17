@@ -157,17 +157,18 @@ export default function Manage() {
   const handleChangeUserSelect = (value) => {
     //const newmenberlist = value.split(",");
     //console.log("newlist",newmenberlist);
-    console.log("value",value);
-  }
-
+    console.log("value", value);
+  };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>任务管理</h1>
       <div style={styles.right}>
-        <Button style={styles.add_btn} type="primary" onClick={() => onAdd()}>
-          新增任务
-        </Button>
+        {permission === "u0" || permission === "a" ? (
+          <Button style={styles.add_btn} type="primary" onClick={() => onAdd()}>
+            新增任务
+          </Button>
+        ) : null}
       </div>
 
       <Modal
