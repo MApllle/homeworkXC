@@ -34,7 +34,6 @@
 │   ├── package-lock.json
 │   └── package.json
 └── frontend-demo
-    ├── README.md
     ├── package-lock.json
     ├── package.json
     ├── public
@@ -124,5 +123,5 @@ npm start
     该界面仅管理员可见，如果其他用户访问该页面，则会显示“无权访问当前页面“的字样。
     ![非管理员访问](README/image-8.png)
 
-    管理员可以在该页面对用户的权限进行更改，也可以新增或者删除用户
+    管理员可以在该页面对用户的权限进行更改，也可以新增或者删除用户（*不可修改用户名，管理员看不到用户密码信息）
     ![用户管理页面](README/image-9.png)
