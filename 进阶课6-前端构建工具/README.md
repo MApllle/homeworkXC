@@ -25,11 +25,108 @@
     - vite:自定义一个plugin:为文件加上版本号，使用transformIndexHtml钩子，将输出的index.html中的引用内容都增加版本号，使得每次更新打包内容，index.html中的内容可以即时变化
 
 ## 项目结构
-
-
-
+```
+├── 1react+webpack+less+ts  //webpack项目
+│   ├── config              //webpack配置
+│   │   ├── webpack.base.config.js
+│   │   ├── webpack.dev.config.js
+│   │   └── webpack.prod.config.js
+│   ├── dist                 //打包后的目录
+│   │   ├── filename.md
+│   │   ├── index.html
+│   │   ├── index.js
+│   │   ├── index.js.LICENSE.txt
+│   │   └── index.min.css
+│   ├── mypluginandloader   //自定义plugin和loader
+│   │   ├── myloader.js
+│   │   └── myplugin.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── src                 //demo源码
+│   │   ├── App.less
+│   │   ├── App.tsx
+│   │   ├── component
+│   │   │   ├── home
+│   │   │   │   └── home.tsx
+│   │   │   ├── page1
+│   │   │   │   └── page1.tsx
+│   │   │   └── page2
+│   │   │       └── page2.tsx
+│   │   ├── index.html
+│   │   └── index.tsx
+│   └── tsconfig.json   //ts配置
+├── 2vue+vite+less+ts   //vite项目
+│   ├── dist            //打包后的目录
+│   │   ├── assets
+│   │   │   ├── index-C48LnJ44.js
+│   │   │   ├── index-G4dWLCnP.css
+│   │   │   ├── index-legacy-xAo_07_4.js
+│   │   │   └── polyfills-legacy-CaavSXOo.js
+│   │   ├── index.html
+│   │   └── vite.svg
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── plugins         //自定义plugin
+│   │   └── myplugin.ts
+│   ├── public
+│   │   └── vite.svg
+│   ├── src             //demo源码
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   └── vue.svg
+│   │   ├── components
+│   │   │   └── svgicon.vue
+│   │   ├── icons
+│   │   │   ├── garden.svg
+│   │   │   ├── home.svg
+│   │   │   └── sofa.svg
+│   │   ├── main.ts
+│   │   ├── router      //路由配置
+│   │   │   └── index.ts
+│   │   ├── style.less
+│   │   ├── views   //页面代码
+│   │   │   ├── home.vue
+│   │   │   ├── page1.vue
+│   │   │   └── page2.vue
+│   │   └── vite-env.d.ts
+│   ├── tsconfig.json   //ts配置
+│   ├── tsconfig.node.json
+│   └── vite.config.ts  //vite配置文件
+└── README.md
+```
 ## 环境依赖
+```
+node  v18.19.0
+npm  v10.2.3
 
+webpack 5.90.3
+vite 5.1.6
+其它包依赖均可以在package-lock.json查看
+```
 ## 项目启动说明
+```
+1react+webpack+less+ts：
+cd 1react+webpack+less+ts
+npm install
+npm run dev
+npm run build
+
+2vue+vite+less+ts：
+cd 2vue+vite+less+ts
+npm install
+npm run dev
+npm run build
+```
 
 ## 使用说明
+1. 1react+webpack+less+ts
+    该项目由三个页面组成，每个页面都有可以跳转路由的按钮，点击可跳转到其他页面
+    ![react页面1](README/image.png)
+    ![react页面2](README/image-1.png)
+    ![react页面3](README/image-2.png)
+2. 2vue+vite+less+ts
+    该项目也由三个页面组成，每个页面都有可以跳转路由的按钮，点击即可跳转
+    ![vue页面1](README/image-3.png)
+    ![vue页面2](README/image-4.png)
+    ![vue页面3](README/image-5.png)

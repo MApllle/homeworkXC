@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import autoVersionPlugin from "./plugins/myplugin.js";
-import legacy from '@vitejs/plugin-legacy';
+import legacy from "@vitejs/plugin-legacy";
 import path, { resolve } from "path";
 
 export default defineConfig({
@@ -14,9 +14,9 @@ export default defineConfig({
       customDomId: "__svg__icons__dom__",
     }),
     legacy({
-      targets: ['defaults', 'not IE 11']
+      targets: ["defaults", "not IE 11"],
     }),
-    autoVersionPlugin(),
+    { ...autoVersionPlugin(), apply: "build" },
   ],
   //配置别名
   resolve: {
